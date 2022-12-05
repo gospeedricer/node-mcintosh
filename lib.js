@@ -1,6 +1,6 @@
 "use strict";
 
-let SerialPort = require("node-serialport"),
+let SerialPort = require("node-serialportCS"),
     util       = require("util"),
     events     = require('events'),
     usbDetect  = require('usb-detection');
