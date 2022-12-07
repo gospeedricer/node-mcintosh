@@ -6,7 +6,7 @@
   "author": "Stefan Kruzlik",
   "license": "Apache-2.0",
   "dependencies": {
-    "serialport": "^6.2.2",
+    "serialport": "^10.0.0",
     "usb-detection": "^4.14.0"
   }
 }
