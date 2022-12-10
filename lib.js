@@ -76,7 +76,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 
         this._port = new SerialPort(opts.port, {
             baudRate: opts.baud || 115200,
-            parser:   SerialPort.parsers.readline(")")
+            parser:   SerialPort.parsers.Readline(")")
         });
 
         this._port.on('data', data => {
