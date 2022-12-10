@@ -80,14 +80,14 @@ McIntosh.prototype.init = function(opts, closecb) {
             baudRate: 115200,
         });
 
-        const parser = this._port.pipe(new Readline(")"));
+        parser = this._port.pipe(new Readline(")"));
 
         this._port.on('data', data => {
 	    if (this.initializing) {
 		this.initializing = false;
 		this.emit('connected');
             }
-        data = data.toString();
+        
 	    data = data.trim();
 	    console.log('[McIntosh] received: %s', data);
 
