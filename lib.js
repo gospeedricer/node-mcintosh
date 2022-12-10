@@ -37,34 +37,34 @@ function send(val, cb) {
 };
 
 McIntosh.prototype.volume_up = function() {
-        send.call(this, "(VUP Z1)");
+        send.call(this, "(VUP Z1)\n");
 };
 McIntosh.prototype.volume_down = function() {
-       send.call(this, "(VDN Z1)");
+       send.call(this, "(VDN Z1)\n");
 };
 McIntosh.prototype.set_volume = function(val) {
 	if (this.properties.volume == val) return;
 	if (this.volumetimer) clearTimeout(this.volumetimer);
         this.volumetimer = setTimeout(() => {
-            send.call(this, "(VST Z1 " + val + ")");
+            send.call(this, "(VST Z1 " + val + ")\n");
 	}, 50)
 };
 McIntosh.prototype.get_status = function() {
-       send.call(this, "(QRY)");
+       send.call(this, "(QRY)\n");
 };
 McIntosh.prototype.power_off = function() {
-       send.call(this, "(POF Z1)");
+       send.call(this, "(POF Z1)\n");
 	        let val = "Standby";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 };
 McIntosh.prototype.power_on = function() {
-       send.call(this, "(PON Z1)");
+       send.call(this, "(PON Z1)\n");
 };
 McIntosh.prototype.set_source = function(val) {
-        send.call(this, "(INP Z1 " + val + ")");
+        send.call(this, "(INP Z1 " + val + ")\n");
 };
 McIntosh.prototype.mute = function(val) {
-        send.call(this, "(MUT Z1 " + val +")");
+        send.call(this, "(MUT Z1 " + val +")\n");
 };
 
 McIntosh.prototype.init = function(opts, closecb) {
