@@ -87,6 +87,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 		this.initializing = false;
 		this.emit('connected');
             }
+        data = data.toString();
 	    data = data.trim();
 	    console.log('[McIntosh] received: %s', data);
 
