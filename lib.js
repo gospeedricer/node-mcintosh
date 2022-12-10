@@ -1,7 +1,9 @@
 "use strict";
 
-let SerialPort = require("serialport"),
-    util       = require("util"),
+const SerialPort = require('serialport'),
+      Readline = require('@serialport/parser-readline');
+
+let util       = require("util"),
     events     = require('events'),
     usbDetect  = require('usb-detection');
 
