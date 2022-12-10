@@ -1,7 +1,8 @@
 "use strict";
 
-const SerialPort = require('serialport'),
-      Readline = require('@serialport/parser-readline');
+let SerialPort = require('serialport');
+      
+let Readline = require('@serialport/parser-readline');
 
 let util       = require("util"),
     events     = require('events'),
@@ -82,7 +83,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 
         let parser = this._port.pipe(new Readline(")"));
 
-        this._port.on('data', data => {
+        parser.on('data', data => {
 	    if (this.initializing) {
 		this.initializing = false;
 		this.emit('connected');
