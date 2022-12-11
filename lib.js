@@ -22,7 +22,7 @@ let _processw = function() {
     this._woutstanding = true;
     console.log("[McIntosh] writing:", this._qw[0]);
 
-    this._port.write(this._qw[0] + "\n",
+    this._port.write(this._qw[0] + "\r",
                     (err) => {
                         if (err) return;
                         this._qw.shift();
