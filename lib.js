@@ -20,9 +20,11 @@ let _processw = function() {
     if (this._qw.length == 0) return;
 
     this._woutstanding = true;
-    console.log("[McIntosh] writing:", this._qw[0]);
+    let temp1 = this._qw[0];
+    temp1.trim();
+    console.log("[McIntosh] writing:", temp1);
 
-    this._port.write(this._qw[0] + "\n",
+    this._port.write(temp1 + "\n",
                     (err) => {
                         if (err) return;
                         this._qw.shift();
