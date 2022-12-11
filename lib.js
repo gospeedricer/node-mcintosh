@@ -22,7 +22,7 @@ let _processw = function() {
     this._woutstanding = true;
     console.log("[McIntosh] writing:", this._qw[0]);
 
-    this._port.write(this._qw[0] + "\r",
+    this._port.write(this._qw[0],
                     (err) => {
                         if (err) return;
                         this._qw.shift();
@@ -37,34 +37,34 @@ function send(val, cb) {
 };
 
 McIntosh.prototype.volume_up = function() {
-        send.call(this, "(VUP Z1)\r");
+        send.call(this, "(VUP Z1)");
 };
 McIntosh.prototype.volume_down = function() {
-       send.call(this, "(VDN Z1)\r");
+       send.call(this, "(VDN Z1)");
 };
 McIntosh.prototype.set_volume = function(val) {
 	if (this.properties.volume == val) return;
 	if (this.volumetimer) clearTimeout(this.volumetimer);
         this.volumetimer = setTimeout(() => {
-            send.call(this, "(VST Z1 " + val + ")\r");
+            send.call(this, "(VST Z1 " + val + ")");
 	}, 50)
 };
 McIntosh.prototype.get_status = function() {
-       send.call(this, "(QRY)\r");
+       send.call(this, "(QRY)");
 };
 McIntosh.prototype.power_off = function() {
-       send.call(this, "(POF Z1)\r");
+       send.call(this, "(POF Z1)");
 	        let val = "Standby";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 };
 McIntosh.prototype.power_on = function() {
-       send.call(this, "(PON Z1)\r");
+       send.call(this, "(PON Z1)");
 };
 McIntosh.prototype.set_source = function(val) {
-        send.call(this, "(INP Z1 " + val + ")\r");
+        send.call(this, "(INP Z1 " + val + ")");
 };
 McIntosh.prototype.mute = function(val) {
-        send.call(this, "(MUT Z1 " + val +")\r");
+        send.call(this, "(MUT Z1 " + val +")");
 };
 
 McIntosh.prototype.init = function(opts, closecb) {
@@ -81,7 +81,7 @@ McIntosh.prototype.init = function(opts, closecb) {
             baudRate: 57600
         });
 
-        let parser = this._port.pipe(new Readline({delimiter: '\r'}));
+        let parser = this._port.pipe(new Readline(")"));
 
         parser.on('data', data => {
 	    if (this.initializing) {
