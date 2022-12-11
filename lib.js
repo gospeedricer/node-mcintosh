@@ -23,7 +23,7 @@ let _processw = function() {
     
     console.log("[McIntosh] writing:", this._qw[0]);
 
-    this._port.write("(VST Z1 14)\r",
+    this._port.write(this._qw[0] + "\r\n",
                     (err) => {
                         if (err) return;
                         this._qw.shift();
