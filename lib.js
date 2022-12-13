@@ -62,7 +62,7 @@ McIntosh.prototype.power_on = function() {
        send.call(this, "(PWR 1)");
 };
 McIntosh.prototype.set_source = function(val) {
-        send.call(this, "(INP Z1 " + val + ")");
+        send.call(this, "(INP " + val + ")");
 };
 McIntosh.prototype.mute = function(val) {
         send.call(this, "(MUT 1)");
@@ -116,10 +116,10 @@ McIntosh.prototype.init = function(opts, closecb) {
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
 	    } else if (/^.*\(INP ([0-9])$/.test(data)) {
-	        let val = data.trim().replace(/^.*\(INP Z1 ([0-9])$/, "$1");
+	        let val = data.trim().replace(/^.*\(INP ([0-9])$/, "$1");
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-		} else if (/^.*\(OP1 Z1 ([0-9])$/.test(data)) {
+		} else if (/^.*\(OP1 ([0-9])$/.test(data)) {
 			let val = "Passthru";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 	    }
