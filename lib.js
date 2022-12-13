@@ -95,7 +95,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 	    data = data.trim();
 	    console.log('[McIntosh] received: %s', data);
 
-	    if (/^\(VST Z1 ([0-9]*)$/.test(data)) {
+	    if (/^\(VOL ([0-9]*)$/.test(data)) {
 	       let val = Number(data.trim().replace(/^\(VOL ([0-9]*)$/, "$1"));
 	       if (this.properties.volume != val) {
 			   console.log('Changing volume from %d to %d', this.properties.volume, val);
@@ -143,8 +143,8 @@ McIntosh.prototype.init = function(opts, closecb) {
         //get device status in case it's up
         send.call(this, "(QRY)\n");
         //get volume in case device is running (QRY does not report volume, so we need to use a 'trick')
-        send.call(this, "(VDN Z1)\n");
-        send.call(this, "(VUP Z1)\n");
+        send.call(this, "(VOL D)\n");
+        send.call(this, "(VOL U)\n");
 //        send.call(this, "(PON Z1)\n");
 //        send.call(this, "(INP Z1 " + this.properties.source + ")\n");
 //        send.call(this, "(VST Z1 " + this.properties.volume + ")\n");
