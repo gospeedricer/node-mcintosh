@@ -23,7 +23,7 @@ let _processw = function() {
     
     console.log("[McIntosh] writing:", this._qw[0]);
 
-    this._port.write("(PWR 1)",
+    this._port.write(this._qw[0] + "\n",
                     (err) => {
                         if (err) return;
                         this._qw.shift();
@@ -38,34 +38,34 @@ function send(val, cb) {
 };
 
 McIntosh.prototype.volume_up = function() {
-        send.call(this, "(VUP Z1)");
+        send.call(this, "(VOL U)");
 };
 McIntosh.prototype.volume_down = function() {
-       send.call(this, "(VDN Z1)");
+       send.call(this, "(VOL D)");
 };
 McIntosh.prototype.set_volume = function(val) {
 	if (this.properties.volume == val) return;
 	if (this.volumetimer) clearTimeout(this.volumetimer);
         this.volumetimer = setTimeout(() => {
-            send.call(this, "(VST Z1 " + val + ")");
+            send.call(this, "(VOL " + val + ")");
 	}, 50)
 };
 McIntosh.prototype.get_status = function() {
        send.call(this, "(QRY)");
 };
 McIntosh.prototype.power_off = function() {
-       send.call(this, "(POF Z1)");
+       send.call(this, "(PWR)");
 	        let val = "Standby";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 };
 McIntosh.prototype.power_on = function() {
-       send.call(this, "(PON Z1)");
+       send.call(this, "(PWR 1)");
 };
 McIntosh.prototype.set_source = function(val) {
         send.call(this, "(INP Z1 " + val + ")");
 };
 McIntosh.prototype.mute = function(val) {
-        send.call(this, "(MUT Z1 " + val +")");
+        send.call(this, "(MUT 1)");
 };
 
 McIntosh.prototype.init = function(opts, closecb) {
@@ -96,26 +96,26 @@ McIntosh.prototype.init = function(opts, closecb) {
 	    console.log('[McIntosh] received: %s', data);
 
 	    if (/^\(VST Z1 ([0-9]*)$/.test(data)) {
-	       let val = Number(data.trim().replace(/^\(VST Z1 ([0-9]*)$/, "$1"));
+	       let val = Number(data.trim().replace(/^\(VOL ([0-9]*)$/, "$1"));
 	       if (this.properties.volume != val) {
 			   console.log('Changing volume from %d to %d', this.properties.volume, val);
 		   this.properties.volume = val;
 	           this.emit('volume', val);
 	       }
 
-	    } else if (/^.*\(POF Z1$/.test(data)) {
+	    } else if (/^.*\(PWR$/.test(data)) {
 	        let val = "Standby";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^.*\(MUT Z1 1$/.test(data)) { // Mute or Muted
+	    } else if (/^.*\(MUT 1$/.test(data)) { // Mute or Muted
 	        let val = "Muted";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^.*\(MUT Z1 0$/.test(data)) { // UnMute or UnMuted
+	    } else if (/^.*\(MUT$/.test(data)) { // UnMute or UnMuted
 	        let val = "UnMuted";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^.*\(INP Z1 ([0-9])$/.test(data)) {
+	    } else if (/^.*\(INP ([0-9])$/.test(data)) {
 	        let val = data.trim().replace(/^.*\(INP Z1 ([0-9])$/, "$1");
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
