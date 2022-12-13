@@ -23,7 +23,7 @@ let _processw = function() {
     
     console.log("[McIntosh] writing:", this._qw[0]);
 
-    this._port.write("\r\n" + this._qw[0] + "\r\n",
+    this._port.write("(PWR 1)",
                     (err) => {
                         if (err) return;
                         this._qw.shift();
