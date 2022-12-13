@@ -23,7 +23,7 @@ let _processw = function() {
     
     console.log("[McIntosh] writing:", this._qw[0]);
 
-    this._port.write(this._qw[0] + "\n",
+    this._port.write(this._qw[0] + "\r",
                     (err) => {
                         if (err) return;
                         this._qw.shift();
@@ -141,11 +141,11 @@ McIntosh.prototype.init = function(opts, closecb) {
         let val = "Standby";
         this.properties.source = val;
         //get device status in case it's up
-        send.call(this, "(STA 0)\n");
-        send.call(this, "(QRY)\n");
+        send.call(this, "(STA 0)\r");
+        send.call(this, "(QRY)\r");
         //get volume in case device is running (QRY does not report volume, so we need to use a 'trick')
-        send.call(this, "(VOL D)\n");
-        send.call(this, "(VOL U)\n");
+        send.call(this, "(VOL D)\r");
+        send.call(this, "(VOL U)\r");
 //        send.call(this, "(PON Z1)\n");
 //        send.call(this, "(INP Z1 " + this.properties.source + ")\n");
 //        send.call(this, "(VST Z1 " + this.properties.volume + ")\n");
