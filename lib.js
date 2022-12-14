@@ -71,7 +71,7 @@ McIntosh.prototype.mute = function(val) {
 McIntosh.prototype.init = function(opts, closecb) {
     let self = this;
 
-    this._qw = [];
+    this._qw = [];   
     this._woutstanding = false;
 
     this.properties = { volume: opts.volume || 1, source: opts.source || '8', usbVid: opts.usbVid };
@@ -139,7 +139,7 @@ McIntosh.prototype.init = function(opts, closecb) {
         let val = "Standby";
         this.properties.source = val;          //get device status in case it's up
         send.call(this, "(QRY)\n");       //get volume in case device is running (QRY does not report volume, so we need to use a 'trick')
-        send.call(this, "(STA 1)\n");
+        send.call(this, "(PWR NONE)\n");
         send.call(this, "(VOL U)\n");
 //        send.call(this, "(PON Z1)\n");
 //        send.call(this, "(INP Z1 " + this.properties.source + ")\n");
