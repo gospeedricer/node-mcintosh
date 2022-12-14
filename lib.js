@@ -38,34 +38,34 @@ function send(val, cb) {
 };
 
 McIntosh.prototype.volume_up = function() {
-        send.call(this, "(VOL U)");
+        send.call(this, "(VOL U)\n");
 };
 McIntosh.prototype.volume_down = function() {
-       send.call(this, "(VOL D)");
+       send.call(this, "(VOL D)\n");
 };
 McIntosh.prototype.set_volume = function(val) {
 	if (this.properties.volume == val) return;
 	if (this.volumetimer) clearTimeout(this.volumetimer);
         this.volumetimer = setTimeout(() => {
-            send.call(this, "(VOL " + val + ")");
+            send.call(this, "(VOL " + val + ")\n");
 	}, 50)
 };
 McIntosh.prototype.get_status = function() {
-       send.call(this, "(QRY)");
+       send.call(this, "(QRY)\n");
 };
 McIntosh.prototype.power_off = function() {
-       send.call(this, "(PWR)");
+       send.call(this, "(PWR)\n");
 	        let val = "Standby";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 };
 McIntosh.prototype.power_on = function() {
-       send.call(this, "(PWR 1)");
+       send.call(this, "(PWR 1)\n");
 };
 McIntosh.prototype.set_source = function(val) {
-        send.call(this, "(INP " + val + ")");
+        send.call(this, "(INP " + val + ")\n");
 };
 McIntosh.prototype.mute = function(val) {
-        send.call(this, "(MUT 1)");
+        send.call(this, "(MUT 1)\n");
 };
 
 McIntosh.prototype.init = function(opts, closecb) {
@@ -139,11 +139,11 @@ McIntosh.prototype.init = function(opts, closecb) {
         let val = "Standby";
         this.properties.source = val;
         //get device status in case it's up
-        send.call(this, "(STA 0)\r");
-        send.call(this, "(QRY)\r");
+        send.call(this, "(STA 0)\n");
+        send.call(this, "(QRY)\n");
         //get volume in case device is running (QRY does not report volume, so we need to use a 'trick')
-        send.call(this, "(VOL D)\r");
-        send.call(this, "(VOL U)\r");
+        send.call(this, "(VOL D)\n");
+        send.call(this, "(VOL U)\n");
 //        send.call(this, "(PON Z1)\n");
 //        send.call(this, "(INP Z1 " + this.properties.source + ")\n");
 //        send.call(this, "(VST Z1 " + this.properties.volume + ")\n");
