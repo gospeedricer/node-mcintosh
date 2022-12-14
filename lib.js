@@ -82,7 +82,7 @@ McIntosh.prototype.init = function(opts, closecb) {
             baudRate: 115200
         });
 
-        const parser = this._port.pipe(new Readline("\n"));
+        const parser = this._port.pipe(new Readline("\r"));
 
         parser.on('data', data => {
 	    if (this.initializing) {
