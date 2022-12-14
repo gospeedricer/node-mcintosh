@@ -79,9 +79,7 @@ McIntosh.prototype.init = function(opts, closecb) {
     this.initializing = true;
 
         this._port = new SerialPort('/dev/ttyUSB0', {
-            baudRate: 115200,
-            dataBits: 8,
-            parity: "none",
+            baudRate: 115200
         });
 
         let parser = this._port.pipe(new Readline(')'));
