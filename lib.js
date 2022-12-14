@@ -137,10 +137,8 @@ McIntosh.prototype.init = function(opts, closecb) {
     this._port.on('open', err => {
         this.emit('preconnected');
         let val = "Standby";
-        this.properties.source = val;
-        //get device status in case it's up
-        send.call(this, "(QRY)\n");
-        //get volume in case device is running (QRY does not report volume, so we need to use a 'trick')
+        this.properties.source = val;          //get device status in case it's up
+        send.call(this, "(QRY)\n");       //get volume in case device is running (QRY does not report volume, so we need to use a 'trick')
         send.call(this, "(STA 1)\n");
         send.call(this, "(VOL U)\n");
 //        send.call(this, "(PON Z1)\n");
