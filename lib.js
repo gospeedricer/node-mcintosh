@@ -98,7 +98,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 	    data = data.trim();
 	    console.log('[McIntosh] received: %s', data);
 
-	    if (/^\(VOL ([0-9]*)/.test(data)) {
+	    if (/^\(VOL ([0-9])*/.test(data)) {
             data = data.trim().replace(/^\(VOL\s/, "");
             let val = Number(data.trim().replace(/\)/, ""));
 	       if (this.properties.volume != val) {
@@ -107,19 +107,19 @@ McIntosh.prototype.init = function(opts, closecb) {
 	           this.emit('volume', val);
 	       }
 
-	    } else if (/^\(PWR\s0\)/.test(data)) {
+	    } else if (/^\(PWR\s0/.test(data)) {
 	        let val = "Standby";
             if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^\(MUT\s1\)/.test(data)) { // Mute or Muted
+	    } else if (/^\(MUT\s1/.test(data)) { // Mute or Muted
 	        let val = "Muted";
             if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^\(MUT\s0\)/.test(data)) { // UnMute or UnMuted
+	    } else if (/^\(MUT\s0/.test(data)) { // UnMute or UnMuted
 	        let val = "UnMuted";
             if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^\(INP ([0-9]*)/.test(data)) {
+	    } else if (/^\(INP ([0-9])*/.test(data)) {
 	        data = data.trim().replace(/^\(INP\s/, "");
             let val = Number(data.trim().replace(/\)/, ""));
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
