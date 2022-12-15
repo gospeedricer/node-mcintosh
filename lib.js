@@ -2,7 +2,7 @@
 
 const SerialPort = require('serialport');
       
-const Readline = require('@serialport/parser-readline');
+const Regex = require('@serialport/parser-regex');
 
 let util       = require("util"),
     events     = require('events'),
