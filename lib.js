@@ -68,6 +68,9 @@ McIntosh.prototype.set_source = function(val) {
 McIntosh.prototype.mute = function(val) {
         send.call(this, "(MUT " + val + ")\n");
 };
+McIntosh.prototype.InputStatus = function(val) {
+    send.call(this, "(INP)\n");
+};
 
 McIntosh.prototype.init = function(opts, closecb) {
     let self = this;
