@@ -65,7 +65,7 @@ McIntosh.prototype.set_source = function(val) {
         send.call(this, "(INP " + val + ")\n");
 };
 McIntosh.prototype.mute = function(val) {
-        send.call(this, "(MUT 1)\n");
+        send.call(this, "(MUT " + val + ")\n");
 };
 
 McIntosh.prototype.init = function(opts, closecb) {
