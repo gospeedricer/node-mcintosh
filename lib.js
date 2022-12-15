@@ -54,7 +54,7 @@ McIntosh.prototype.get_status = function() {
        send.call(this, "(QRY)\n");
 };
 McIntosh.prototype.power_off = function() {
-       send.call(this, "(PWR)\n");
+       send.call(this, "(PWR 0)\n");
 	        let val = "Standby";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 };
@@ -97,28 +97,30 @@ McIntosh.prototype.init = function(opts, closecb) {
 	    data = data.trim();
 	    console.log('[McIntosh] received: %s', data);
 
-	    if (/^\(VOL ([0-9]*)$/.test(data)) {
-	       let val = Number(data.trim().replace(/^\(VOL ([0-9]*)$/, "$1"));
+	    if (/^\(VOL ([0-9]*)/.test(data)) {
+            data = data.trim().replace(/^\(VOL\s/, "");
+            let val = Number(data.trim().replace(/\)/, ""));
 	       if (this.properties.volume != val) {
 			   console.log('Changing volume from %d to %d', this.properties.volume, val);
 		   this.properties.volume = val;
 	           this.emit('volume', val);
 	       }
 
-	    } else if (/^.*\(PWR$/.test(data)) {
+	    } else if (/^\(PWR\s0\)/.test(data)) {
 	        let val = "Standby";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^.*\(MUT 1$/.test(data)) { // Mute or Muted
+	    } else if (/^\(PWR\s1\)/.test(data)) { // Mute or Muted
 	        let val = "Muted";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^.*\(MUT$/.test(data)) { // UnMute or UnMuted
+	    } else if (/^\(MUT\s0\)/.test(data)) { // UnMute or UnMuted
 	        let val = "UnMuted";
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^.*\(INP ([0-9])$/.test(data)) {
-	        let val = data.trim().replace(/^.*\(INP ([0-9])$/, "$1");
+	    } else if (/^\(INP ([0-9]*)/.test(data)) {
+	        data = data.trim().replace(/^\(INP\s/, "");
+            let val = Number(data.trim().replace(/\)/, ""));
 	        if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
 		} else if (/^.*\(OP1 ([0-9])$/.test(data)) {
