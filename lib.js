@@ -60,6 +60,7 @@ McIntosh.prototype.power_off = function() {
 };
 McIntosh.prototype.power_on = function() {
        send.call(this, "(PWR 1)\n");
+       
 };
 McIntosh.prototype.set_source = function(val) {
         send.call(this, "(INP " + val + ")\n");
@@ -108,15 +109,15 @@ McIntosh.prototype.init = function(opts, closecb) {
 
 	    } else if (/^\(PWR\s0\)/.test(data)) {
 	        let val = "Standby";
-	        
+            if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
 	    } else if (/^\(PWR\s1\)/.test(data)) { // Mute or Muted
 	        let val = "Muted";
-	        
+            if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
 	    } else if (/^\(MUT\s0\)/.test(data)) { // UnMute or UnMuted
 	        let val = "UnMuted";
-	        
+            if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
 	    } else if (/^\(INP ([0-9]*)/.test(data)) {
 	        data = data.trim().replace(/^\(INP\s/, "");
@@ -125,7 +126,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 
 		} else if (/^.*\(OP1 ([0-9])$/.test(data)) {
 			let val = "Passthru";
-	        
+            if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 	    }
 		  else {
 			console.log('No matching string');
