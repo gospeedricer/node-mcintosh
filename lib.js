@@ -111,7 +111,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 	        let val = "Standby";
             if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
-	    } else if (/^\(PWR\s1\)/.test(data)) { // Mute or Muted
+	    } else if (/^\(MUT\s1\)/.test(data)) { // Mute or Muted
 	        let val = "Muted";
             if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 
