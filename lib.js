@@ -128,7 +128,7 @@ McIntosh.prototype.init = function(opts, closecb) {
 			let val = "Passthru";
             if (this.properties.source != val) { this.properties.source = val; this.emit('source', val); }
 	    }
-		  else {
+		else {
 			console.log('No matching string');
 		  }
         });
