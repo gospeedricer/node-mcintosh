@@ -86,7 +86,7 @@ McIntosh.prototype.init = function(opts, closecb) {
             flowControl: false
         });
 
-        const parser = this._port.pipe(new Readline("CR"));
+        const parser = this._port.pipe(new Readline(")"));
 
         parser.on('data', data => {
 	    if (this.initializing) {
